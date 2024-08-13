@@ -1,0 +1,40 @@
+type CLFactory_PoolCreated {
+  id: ID!
+  token0: String!
+  token1: String!
+  tickSpacing: BigInt!
+  pool: String!
+}
+
+type Voter_GaugeCreated {
+  id: ID!
+  poolFactory: String!
+  votingRewardsFactory: String!
+  gaugeFactory: String!
+  pool: String!
+  bribeVotingReward: String!
+  feeVotingReward: String!
+  gauge: String!
+  creator: String!
+}
+
+type PoolFactory_PoolCreated {
+  id: ID!
+  token0: String!
+  token1: String!
+  stable: Boolean!
+  pool: String!
+  unnamed: BigInt!
+}
+
+type Pool_Sync {
+  id: ID!
+  reserve0: BigInt!
+  reserve1: BigInt!
+}
+
+type PoolFactory_SetCustomFee {
+  id: ID!
+  pool: String!
+  fee: BigInt!
+}
