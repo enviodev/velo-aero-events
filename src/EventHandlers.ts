@@ -11,6 +11,12 @@ import {
   PoolFactory_SetCustomFee,
   Pool,
   Pool_Sync,
+  BribeVotingReward,
+  BribeVotingReward_Deposit,
+  BribeVotingReward_NotifyReward,
+  BribeVotingReward_Withdraw,
+  Gauge,
+  Gauge_NotifyReward,
 } from "generated";
 
 CLFactory.PoolCreated.handler(async ({ event, context }) => {
@@ -23,6 +29,11 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
   };
 
   context.CLFactory_PoolCreated.set(entity);
+});
+
+Voter.GaugeCreated.contractRegister(({ event, context }) => {
+  context.addBribeVotingReward(event.params.bribeVotingReward);
+  context.addGauge(event.params.gauge);
 });
 
 Voter.GaugeCreated.handler(async ({ event, context }) => {
@@ -41,9 +52,9 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
   context.Voter_GaugeCreated.set(entity);
 });
 
-// PoolFactory.PoolCreated.contractRegister(({ event, context }) => {
-//   context.addPool(event.params.pool);
-// });
+PoolFactory.PoolCreated.contractRegister(({ event, context }) => {
+  context.addPool(event.params.pool);
+});
 
 PoolFactory.PoolCreated.handler(async ({ event, context }) => {
   const entity: PoolFactory_PoolCreated = {
@@ -76,4 +87,48 @@ Pool.Sync.handler(async ({ event, context }) => {
   };
 
   context.Pool_Sync.set(entity);
+});
+
+BribeVotingReward.Deposit.handler(async ({ event, context }) => {
+  const entity: BribeVotingReward_Deposit = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    from: event.params.from,
+    tokenId: event.params.tokenId,
+    amount: event.params.amount,
+  };
+
+  context.BribeVotingReward_Deposit.set(entity);
+});
+
+BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
+  const entity: BribeVotingReward_NotifyReward = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    from: event.params.from,
+    reward: event.params.reward,
+    epoch: event.params.epoch,
+    amount: event.params.amount,
+  };
+
+  context.BribeVotingReward_NotifyReward.set(entity);
+});
+
+BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
+  const entity: BribeVotingReward_Withdraw = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    from: event.params.from,
+    tokenId: event.params.tokenId,
+    amount: event.params.amount,
+  };
+
+  context.BribeVotingReward_Withdraw.set(entity);
+});
+
+Gauge.NotifyReward.handler(async ({ event, context }) => {
+  const entity: Gauge_NotifyReward = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    from: event.params.from,
+    amount: event.params.amount,
+  };
+
+  context.Gauge_NotifyReward.set(entity);
 });

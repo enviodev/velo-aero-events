@@ -38,3 +38,31 @@ type PoolFactory_SetCustomFee {
   pool: String!
   fee: BigInt!
 }
+
+type BribeVotingReward_Deposit {
+  id: ID!
+  from: String!
+  tokenId: BigInt!
+  amount: BigInt!
+}
+
+type BribeVotingReward_NotifyReward {
+  id: ID!
+  from: String!
+  reward: String!
+  epoch: BigInt!
+  amount: BigInt!
+}
+
+type BribeVotingReward_Withdraw {
+  id: ID!
+  from: String!
+  tokenId: BigInt!
+  amount: BigInt!
+}
+
+type Gauge_NotifyReward {
+  id: ID!
+  from: String!
+  amount: BigInt!
+}
