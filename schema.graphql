@@ -4,6 +4,8 @@ type CLFactory_PoolCreated {
   token1: String!
   tickSpacing: BigInt!
   pool: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type Voter_GaugeCreated {
@@ -16,6 +18,8 @@ type Voter_GaugeCreated {
   feeVotingReward: String!
   gauge: String!
   creator: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type PoolFactory_PoolCreated {
@@ -25,18 +29,25 @@ type PoolFactory_PoolCreated {
   stable: Boolean!
   pool: String!
   unnamed: BigInt!
-}
-
-type Pool_Sync {
-  id: ID!
-  reserve0: BigInt!
-  reserve1: BigInt!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type PoolFactory_SetCustomFee {
   id: ID!
   pool: String!
   fee: BigInt!
+  timestamp: Int!
+  chainId: Int!
+}
+
+type Pool_Sync {
+  id: ID!
+  reserve0: BigInt!
+  reserve1: BigInt!
+  sourceAddress: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type BribeVotingReward_Deposit {
@@ -44,6 +55,9 @@ type BribeVotingReward_Deposit {
   from: String!
   tokenId: BigInt!
   amount: BigInt!
+  sourceAddress: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type BribeVotingReward_NotifyReward {
@@ -52,6 +66,9 @@ type BribeVotingReward_NotifyReward {
   reward: String!
   epoch: BigInt!
   amount: BigInt!
+  sourceAddress: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type BribeVotingReward_Withdraw {
@@ -59,10 +76,16 @@ type BribeVotingReward_Withdraw {
   from: String!
   tokenId: BigInt!
   amount: BigInt!
+  sourceAddress: String!
+  timestamp: Int!
+  chainId: Int!
 }
 
 type Gauge_NotifyReward {
   id: ID!
   from: String!
   amount: BigInt!
+  sourceAddress: String!
+  timestamp: Int!
+  chainId: Int!
 }

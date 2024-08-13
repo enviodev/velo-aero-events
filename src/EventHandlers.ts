@@ -26,6 +26,8 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
     token1: event.params.token1,
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
+    timestamp: event.block.timestamp,
+    chainId: event.chainId,
   };
 
   context.CLFactory_PoolCreated.set(entity);
@@ -47,6 +49,8 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
     feeVotingReward: event.params.feeVotingReward,
     gauge: event.params.gauge,
     creator: event.params.creator,
+    timestamp: event.block.timestamp,
+    chainId: event.chainId,
   };
 
   context.Voter_GaugeCreated.set(entity);
@@ -64,6 +68,8 @@ PoolFactory.PoolCreated.handler(async ({ event, context }) => {
     stable: event.params.stable,
     pool: event.params.pool,
     unnamed: event.params.unnamed,
+    timestamp: event.block.timestamp,
+    chainId: event.chainId,
   };
 
   context.PoolFactory_PoolCreated.set(entity);
@@ -74,6 +80,8 @@ PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     pool: event.params.pool,
     fee: event.params.fee,
+    timestamp: event.block.timestamp,
+    chainId: event.chainId,
   };
 
   context.PoolFactory_SetCustomFee.set(entity);
@@ -84,6 +92,9 @@ Pool.Sync.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     reserve0: event.params.reserve0,
     reserve1: event.params.reserve1,
+    sourceAddress: event.srcAddress,
+    timestamp: event.block.timestamp,
+    chainId: event.chainId,
   };
 
   context.Pool_Sync.set(entity);
@@ -95,6 +106,9 @@ BribeVotingReward.Deposit.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
+    timestamp: event.block.timestamp,
+    sourceAddress: event.srcAddress,
+    chainId: event.chainId,
   };
 
   context.BribeVotingReward_Deposit.set(entity);
@@ -107,6 +121,9 @@ BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
     reward: event.params.reward,
     epoch: event.params.epoch,
     amount: event.params.amount,
+    timestamp: event.block.timestamp,
+    sourceAddress: event.srcAddress,
+    chainId: event.chainId,
   };
 
   context.BribeVotingReward_NotifyReward.set(entity);
@@ -118,6 +135,9 @@ BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
+    timestamp: event.block.timestamp,
+    sourceAddress: event.srcAddress,
+    chainId: event.chainId,
   };
 
   context.BribeVotingReward_Withdraw.set(entity);
@@ -128,6 +148,9 @@ Gauge.NotifyReward.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
     amount: event.params.amount,
+    timestamp: event.block.timestamp,
+    sourceAddress: event.srcAddress,
+    chainId: event.chainId,
   };
 
   context.Gauge_NotifyReward.set(entity);
