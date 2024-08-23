@@ -1,91 +1,93 @@
-type CLFactory_PoolCreated {
+type CLFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   id: ID!
-  token0: String!
-  token1: String!
+  token0: String! @index
+  token1: String! @index
   tickSpacing: BigInt!
-  pool: String!
-  timestamp: Int!
-  chainId: Int!
+  pool: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type Voter_GaugeCreated {
+type Voter_GaugeCreated @index(fields: ["pool", "gauge"]) {
   id: ID!
   poolFactory: String!
   votingRewardsFactory: String!
   gaugeFactory: String!
-  pool: String!
+  pool: String! @index
   bribeVotingReward: String!
   feeVotingReward: String!
-  gauge: String!
-  creator: String!
-  timestamp: Int!
-  chainId: Int!
+  gauge: String! @index
+  creator: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type PoolFactory_PoolCreated {
+type PoolFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   id: ID!
-  token0: String!
-  token1: String!
+  token0: String! @index
+  token1: String! @index
   stable: Boolean!
-  pool: String!
+  pool: String! @index
   unnamed: BigInt!
-  timestamp: Int!
-  chainId: Int!
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
 type PoolFactory_SetCustomFee {
   id: ID!
-  pool: String!
-  fee: BigInt!
-  timestamp: Int!
-  chainId: Int!
+  pool: String! @index
+  fee: BigInt! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type Pool_Sync {
+type Pool_Sync @index(fields: ["sourceAddress", "timestamp"]) {
   id: ID!
   reserve0: BigInt!
   reserve1: BigInt!
-  sourceAddress: String!
-  timestamp: Int!
-  chainId: Int!
+  sourceAddress: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type BribeVotingReward_Deposit {
+type BribeVotingReward_Deposit @index(fields: ["from", "tokenId"]) {
   id: ID!
-  from: String!
-  tokenId: BigInt!
+  from: String! @index
+  tokenId: BigInt! @index
   amount: BigInt!
-  sourceAddress: String!
-  timestamp: Int!
-  chainId: Int!
+  sourceAddress: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type BribeVotingReward_NotifyReward {
+type BribeVotingReward_NotifyReward
+  @index(fields: ["from", "reward", "epoch"])
+  @index(fields: ["sourceAddress", "epoch"]) {
   id: ID!
-  from: String!
-  reward: String!
-  epoch: BigInt!
+  from: String! @index
+  reward: String! @index
+  epoch: BigInt! @index
   amount: BigInt!
-  sourceAddress: String!
-  timestamp: Int!
-  chainId: Int!
+  sourceAddress: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
-type BribeVotingReward_Withdraw {
+type BribeVotingReward_Withdraw @index(fields: ["from", "tokenId"]) {
   id: ID!
-  from: String!
-  tokenId: BigInt!
+  from: String! @index
+  tokenId: BigInt! @index
   amount: BigInt!
-  sourceAddress: String!
-  timestamp: Int!
-  chainId: Int!
+  sourceAddress: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
 
 type Gauge_NotifyReward {
   id: ID!
-  from: String!
+  from: String! @index
   amount: BigInt!
-  sourceAddress: String!
-  timestamp: Int!
-  chainId: Int!
+  sourceAddress: String! @index
+  timestamp: Int! @index
+  chainId: Int! @index
 }
