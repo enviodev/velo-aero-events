@@ -91,3 +91,11 @@ type Gauge_NotifyReward {
   timestamp: Int! @index
   chainId: Int! @index
 }
+
+type Token {
+  id: ID! # token address
+  symbol: String! # token symbol
+  name: String! # token name
+  chainID: BigInt! # chain id of the token
+  decimals: BigInt! # number of decimals
+}

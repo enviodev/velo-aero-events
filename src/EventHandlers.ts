@@ -17,7 +17,10 @@ import {
   BribeVotingReward_Withdraw,
   Gauge,
   Gauge_NotifyReward,
+  Token,
 } from "generated";
+
+import { getErc20TokenDetails } from "./erc20";
 
 CLFactory.PoolCreated.handler(async ({ event, context }) => {
   const entity: CLFactory_PoolCreated = {
@@ -31,6 +34,10 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
   };
 
   context.CLFactory_PoolCreated.set(entity);
+
+  // Fetch and save token details
+  await saveTokenDetails(event.params.token0, event.chainId, context);
+  await saveTokenDetails(event.params.token1, event.chainId, context);
 });
 
 Voter.GaugeCreated.contractRegister(({ event, context }) => {
@@ -73,6 +80,10 @@ PoolFactory.PoolCreated.handler(async ({ event, context }) => {
   };
 
   context.PoolFactory_PoolCreated.set(entity);
+
+  // Fetch and save token details
+  await saveTokenDetails(event.params.token0, event.chainId, context);
+  await saveTokenDetails(event.params.token1, event.chainId, context);
 });
 
 PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
@@ -155,3 +166,23 @@ Gauge.NotifyReward.handler(async ({ event, context }) => {
 
   context.Gauge_NotifyReward.set(entity);
 });
+
+async function saveTokenDetails(
+  address: string,
+  chainId: number,
+  context: any
+) {
+  try {
+    const tokenDetails = await getErc20TokenDetails(address, chainId);
+    const token: Token = {
+      id: address,
+      symbol: tokenDetails.symbol,
+      name: tokenDetails.name,
+      chainID: BigInt(chainId),
+      decimals: BigInt(tokenDetails.decimals),
+    };
+    context.Token.set(token);
+  } catch (error) {
+    console.error(`Error fetching token details for ${address}:`, error);
+  }
+}
