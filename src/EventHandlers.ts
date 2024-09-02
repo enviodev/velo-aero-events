@@ -11,13 +11,17 @@ import {
   PoolFactory_SetCustomFee,
   Pool,
   Pool_Sync,
+  Pool_Swap,
   BribeVotingReward,
   BribeVotingReward_Deposit,
   BribeVotingReward_NotifyReward,
   BribeVotingReward_Withdraw,
   Gauge,
   Gauge_NotifyReward,
+  Token,
 } from "generated";
+
+import { getErc20TokenDetails } from "./erc20";
 
 CLFactory.PoolCreated.handler(async ({ event, context }) => {
   const entity: CLFactory_PoolCreated = {
@@ -26,11 +30,15 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
     token1: event.params.token1,
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
   context.CLFactory_PoolCreated.set(entity);
+
+  // Fetch and save token details
+  await saveTokenDetails(event.params.token0, event.chainId, context);
+  await saveTokenDetails(event.params.token1, event.chainId, context);
 });
 
 Voter.GaugeCreated.contractRegister(({ event, context }) => {
@@ -49,7 +57,7 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
     feeVotingReward: event.params.feeVotingReward,
     gauge: event.params.gauge,
     creator: event.params.creator,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -68,11 +76,15 @@ PoolFactory.PoolCreated.handler(async ({ event, context }) => {
     stable: event.params.stable,
     pool: event.params.pool,
     unnamed: event.params.unnamed,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
   context.PoolFactory_PoolCreated.set(entity);
+
+  // Fetch and save token details
+  await saveTokenDetails(event.params.token0, event.chainId, context);
+  await saveTokenDetails(event.params.token1, event.chainId, context);
 });
 
 PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
@@ -80,7 +92,7 @@ PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     pool: event.params.pool,
     fee: event.params.fee,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -93,11 +105,28 @@ Pool.Sync.handler(async ({ event, context }) => {
     reserve0: event.params.reserve0,
     reserve1: event.params.reserve1,
     sourceAddress: event.srcAddress,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
   context.Pool_Sync.set(entity);
+});
+
+Pool.Swap.handler(async ({ event, context }) => {
+  const entity: Pool_Swap = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    sender: event.params.sender,
+    to: event.params.to,
+    amount0In: event.params.amount0In,
+    amount1In: event.params.amount1In,
+    amount0Out: event.params.amount0Out,
+    amount1Out: event.params.amount1Out,
+    sourceAddress: event.srcAddress, // Add sourceAddress
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
+    chainId: event.chainId,
+  };
+
+  context.Pool_Swap.set(entity);
 });
 
 BribeVotingReward.Deposit.handler(async ({ event, context }) => {
@@ -106,7 +135,7 @@ BribeVotingReward.Deposit.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -121,7 +150,7 @@ BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
     reward: event.params.reward,
     epoch: event.params.epoch,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -135,7 +164,7 @@ BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -148,10 +177,30 @@ Gauge.NotifyReward.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
 
   context.Gauge_NotifyReward.set(entity);
 });
+
+async function saveTokenDetails(
+  address: string,
+  chainId: number,
+  context: any
+) {
+  try {
+    const tokenDetails = await getErc20TokenDetails(address, chainId);
+    const token: Token = {
+      id: `${chainId}-${address}`,
+      symbol: tokenDetails.symbol,
+      name: tokenDetails.name,
+      chainID: BigInt(chainId),
+      decimals: BigInt(tokenDetails.decimals),
+    };
+    context.Token.set(token);
+  } catch (error) {
+    console.error(`Error fetching token details for ${address}:`, error);
+  }
+}
