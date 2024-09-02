@@ -99,3 +99,16 @@ type Token {
   chainID: BigInt! # chain id of the token
   decimals: BigInt! # number of decimals
 }
+
+type Pool_Swap {
+  id: ID!
+  sender: String! @index
+  to: String! @index
+  amount0In: BigInt!
+  amount1In: BigInt!
+  amount0Out: BigInt!
+  amount1Out: BigInt!
+  sourceAddress: String! @index
+  timestamp: Timestamp! @index
+  chainId: Int! @index
+}
