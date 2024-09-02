@@ -29,7 +29,7 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
     token1: event.params.token1,
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -56,7 +56,7 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
     feeVotingReward: event.params.feeVotingReward,
     gauge: event.params.gauge,
     creator: event.params.creator,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -75,7 +75,7 @@ PoolFactory.PoolCreated.handler(async ({ event, context }) => {
     stable: event.params.stable,
     pool: event.params.pool,
     unnamed: event.params.unnamed,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -91,7 +91,7 @@ PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     pool: event.params.pool,
     fee: event.params.fee,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -104,7 +104,7 @@ Pool.Sync.handler(async ({ event, context }) => {
     reserve0: event.params.reserve0,
     reserve1: event.params.reserve1,
     sourceAddress: event.srcAddress,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     chainId: event.chainId,
   };
 
@@ -117,7 +117,7 @@ BribeVotingReward.Deposit.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -132,7 +132,7 @@ BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
     reward: event.params.reward,
     epoch: event.params.epoch,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -146,7 +146,7 @@ BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
     from: event.params.from,
     tokenId: event.params.tokenId,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -159,7 +159,7 @@ Gauge.NotifyReward.handler(async ({ event, context }) => {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
     amount: event.params.amount,
-    timestamp: event.block.timestamp,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
     chainId: event.chainId,
   };
@@ -175,7 +175,7 @@ async function saveTokenDetails(
   try {
     const tokenDetails = await getErc20TokenDetails(address, chainId);
     const token: Token = {
-      id: address,
+      id: `${chainId}-${address}`,
       symbol: tokenDetails.symbol,
       name: tokenDetails.name,
       chainID: BigInt(chainId),

@@ -4,7 +4,7 @@ type CLFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   token1: String! @index
   tickSpacing: BigInt!
   pool: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -18,7 +18,7 @@ type Voter_GaugeCreated @index(fields: ["pool", "gauge"]) {
   feeVotingReward: String!
   gauge: String! @index
   creator: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -29,7 +29,7 @@ type PoolFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   stable: Boolean!
   pool: String! @index
   unnamed: BigInt!
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -37,7 +37,7 @@ type PoolFactory_SetCustomFee {
   id: ID!
   pool: String! @index
   fee: BigInt! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -46,7 +46,7 @@ type Pool_Sync @index(fields: ["sourceAddress", "timestamp"]) {
   reserve0: BigInt!
   reserve1: BigInt!
   sourceAddress: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -56,7 +56,7 @@ type BribeVotingReward_Deposit @index(fields: ["from", "tokenId"]) {
   tokenId: BigInt! @index
   amount: BigInt!
   sourceAddress: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -69,7 +69,7 @@ type BribeVotingReward_NotifyReward
   epoch: BigInt! @index
   amount: BigInt!
   sourceAddress: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -79,7 +79,7 @@ type BribeVotingReward_Withdraw @index(fields: ["from", "tokenId"]) {
   tokenId: BigInt! @index
   amount: BigInt!
   sourceAddress: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
@@ -88,12 +88,12 @@ type Gauge_NotifyReward {
   from: String! @index
   amount: BigInt!
   sourceAddress: String! @index
-  timestamp: Int! @index
+  timestamp: Timestamp! @index
   chainId: Int! @index
 }
 
 type Token {
-  id: ID! # token address
+  id: ID! # chainID-tokenAddress
   symbol: String! # token symbol
   name: String! # token name
   chainID: BigInt! # chain id of the token
