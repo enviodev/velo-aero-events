@@ -11,6 +11,7 @@ import {
   PoolFactory_SetCustomFee,
   Pool,
   Pool_Sync,
+  Pool_Swap,
   BribeVotingReward,
   BribeVotingReward_Deposit,
   BribeVotingReward_NotifyReward,
@@ -109,6 +110,23 @@ Pool.Sync.handler(async ({ event, context }) => {
   };
 
   context.Pool_Sync.set(entity);
+});
+
+Pool.Swap.handler(async ({ event, context }) => {
+  const entity: Pool_Swap = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    sender: event.params.sender,
+    to: event.params.to,
+    amount0In: event.params.amount0In,
+    amount1In: event.params.amount1In,
+    amount0Out: event.params.amount0Out,
+    amount1Out: event.params.amount1Out,
+    sourceAddress: event.srcAddress, // Add sourceAddress
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
+    chainId: event.chainId,
+  };
+
+  context.Pool_Swap.set(entity);
 });
 
 BribeVotingReward.Deposit.handler(async ({ event, context }) => {
