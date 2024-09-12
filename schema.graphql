@@ -112,3 +112,20 @@ type Pool_Swap {
   timestamp: Timestamp! @index
   chainId: Int! @index
 }
+
+type Voter_WhitelistToken {
+  id: ID!
+  whitelister: String! @index
+  token: String! @index
+  isWhitelisted: Boolean!
+  timestamp: Timestamp! @index
+  chainId: Int! @index
+}
+
+type Token_Price {
+  id: ID! # chainID-tokenAddress-timestamp
+  timestamp: Timestamp! @index
+  chainId: Int! @index
+  tokenAddress: String! @index
+  price: Float!
+}
