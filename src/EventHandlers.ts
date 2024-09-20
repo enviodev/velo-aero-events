@@ -19,9 +19,13 @@ import {
   Gauge,
   Gauge_NotifyReward,
   Token,
+  Voter_WhitelistToken,
 } from "generated";
 
 import { getErc20TokenDetails } from "./erc20";
+import { initializeTokenPrices } from "./initalTokenPrices";
+
+let initialized = false;
 
 CLFactory.PoolCreated.handler(async ({ event, context }) => {
   const entity: CLFactory_PoolCreated = {
@@ -64,11 +68,31 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
   context.Voter_GaugeCreated.set(entity);
 });
 
+Voter.WhitelistToken.handler(async ({ event, context }) => {
+  const entity: Voter_WhitelistToken = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    whitelister: event.params.whitelister,
+    token: event.params.token,
+    isWhitelisted: event.params._bool,
+    timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
+    chainId: event.chainId,
+  };
+
+  context.Voter_WhitelistToken.set(entity);
+
+  // Fetch and save token details if not already saved
+  await saveTokenDetails(event.params.token, event.chainId, context);
+});
+
 PoolFactory.PoolCreated.contractRegister(({ event, context }) => {
   context.addPool(event.params.pool);
 });
 
 PoolFactory.PoolCreated.handler(async ({ event, context }) => {
+  if (!initialized) {
+    await initializeTokenPrices(context);
+    initialized = true;
+  }
   const entity: PoolFactory_PoolCreated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0: event.params.token0,
