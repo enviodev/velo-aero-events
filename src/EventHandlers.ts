@@ -19,6 +19,7 @@ import {
   Gauge,
   Gauge_NotifyReward,
   Token,
+  User,
 } from "generated";
 
 import { getErc20TokenDetails } from "./erc20";
@@ -113,6 +114,23 @@ Pool.Sync.handler(async ({ event, context }) => {
 });
 
 Pool.Swap.handler(async ({ event, context }) => {
+  const user = await context.User.get(`${event.chainId}-${event.srcAddress}`);
+  if (!user) {
+    const newUser: User = {
+      id: `${event.chainId}-${event.srcAddress}`,
+      address: event.srcAddress,
+      numberOfSwaps: BigInt(1),
+    };
+    context.User.set(newUser);
+  } else {
+    const updatedUser: User = {
+      id: `${event.chainId}-${event.srcAddress}`,
+      address: event.srcAddress,
+      numberOfSwaps: user.numberOfSwaps + BigInt(1),
+    };
+    context.User.set(updatedUser);
+  }
+
   const entity: Pool_Swap = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,

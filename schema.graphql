@@ -100,6 +100,12 @@ type Token {
   decimals: BigInt! # number of decimals
 }
 
+type User {
+  id: ID! # chainID-userAddress
+  address: String! @index
+  numberOfSwaps: BigInt! # number of swaps
+}
+
 type Pool_Swap {
   id: ID!
   sender: String! @index
