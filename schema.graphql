@@ -112,3 +112,9 @@ type Pool_Swap {
   timestamp: Timestamp! @index
   chainId: Int! @index
 }
+
+type User {
+  id: ID! # chainID-userAddress
+  address: String! @index
+  numberOfSwaps: BigInt! # number of swaps
+}

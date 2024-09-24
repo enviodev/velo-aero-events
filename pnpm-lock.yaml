@@ -12,8 +12,8 @@ importers:
         specifier: 4.3.10
         version: 4.3.10
       envio:
-        specifier: 2.2.0
-        version: 2.2.0
+        specifier: 2.3.2
+        version: 2.3.2
       ethers:
         specifier: 6.8.0
         version: 6.8.0
@@ -114,13 +114,13 @@ importers:
         version: 11.1.3
       rescript-envsafe:
         specifier: 4.2.0
-        version: 4.2.0(rescript-schema@8.0.0)(rescript@11.1.3)
+        version: 4.2.0(rescript-schema@8.2.0)(rescript@11.1.3)
       rescript-express:
         specifier: 0.4.1
         version: 0.4.1(express@4.19.2)
       rescript-schema:
-        specifier: 8.0.0
-        version: 8.0.0(rescript@11.1.3)
+        specifier: 8.2.0
+        version: 8.2.0(rescript@11.1.3)
       root:
         specifier: ../.
         version: link:..
@@ -886,46 +886,46 @@ packages:
       once: 1.4.0
     dev: false
 
-  /envio-darwin-arm64@2.2.0:
-    resolution: {integrity: sha512-K8JUYhty0bA1VwgmeE9FrBBOYwKE9QljO1WZVdATEEmFIPcSLwnsVBTHVHjEArKfU1nTFgKzuNv5igIIvZAvMw==}
+  /envio-darwin-arm64@2.3.2:
+    resolution: {integrity: sha512-CmyG796jrfnvMx/p/JrS6HiqPjyXR8sPmo8TKMSpuEFsM30r0iSRM1+2AJw1+w/3uyfgP/E6GsHPZyD55tsBRg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-darwin-x64@2.2.0:
-    resolution: {integrity: sha512-UA70eN6+4H4fANltjANXL7yS7OLbRF8dVXSLL9Dc0GZSRGGcr0z8Qa7Wfxt9vht7YSH6fPoN8I6KPnaUbbz3tA==}
+  /envio-darwin-x64@2.3.2:
+    resolution: {integrity: sha512-cYgOSgY6qUPV733oORmEQk12nEShaz2E2Js72L3mh3djGrZmTQaIb0whl9uIptYO8B4vmpRPM9j1ox4eoihydA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-arm64@2.2.0:
-    resolution: {integrity: sha512-dGJT64Uas+Jl5rXx1EvRpUmKOm1DIt8KfkQll4RDBRwU6ROX5/CYLmbT3FQHxwsRpyflaqzNv1oWKbpCiSOc3Q==}
+  /envio-linux-arm64@2.3.2:
+    resolution: {integrity: sha512-PAgWkP1AVdfBFt1NCH1gsnRAqev2nNjJZhh1zaNJikUOMjBsj1qQDXSgvnji7DyoqbjCPldQTxGBWP9CRTPqOQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio-linux-x64@2.2.0:
-    resolution: {integrity: sha512-1U+X7z6Wuhly2btkCsFshHESnA1Hv3tsK30tZhqGv9+/Lw/hCxTRy9MdzxX/Tbnq/kCKQp0/iRRf+MurE8olqA==}
+  /envio-linux-x64@2.3.2:
+    resolution: {integrity: sha512-oadisYezSR+MOjsQ1hWl3jGNy2vU7EvtX3UBMuU5yx9qnJj+APx8eSo3EZKjUbhRwodBIPg+P667S/UvmvXoFQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /envio@2.2.0:
-    resolution: {integrity: sha512-uIZap6vAWPdAwchbcT1sG9rV0LjHew149cRXoD/o48g8naSbvfCCtw0OlxT26f6USK3TfxZAB/qf9+QGApKljg==}
+  /envio@2.3.2:
+    resolution: {integrity: sha512-WI9JEZyHri/xx2E0Rdu5PNXioWZiNIncT3ukYMxS2kbUgb1qLBMSPDb5Ffrsb7j1yaI9vVuYciEalxrRv7k7vg==}
     hasBin: true
     optionalDependencies:
-      envio-darwin-arm64: 2.2.0
-      envio-darwin-x64: 2.2.0
-      envio-linux-arm64: 2.2.0
-      envio-linux-x64: 2.2.0
+      envio-darwin-arm64: 2.3.2
+      envio-darwin-x64: 2.3.2
+      envio-linux-arm64: 2.3.2
+      envio-linux-x64: 2.3.2
     dev: false
 
   /es-define-property@1.0.0:
@@ -2046,14 +2046,14 @@ packages:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
 
-  /rescript-envsafe@4.2.0(rescript-schema@8.0.0)(rescript@11.1.3):
+  /rescript-envsafe@4.2.0(rescript-schema@8.2.0)(rescript@11.1.3):
     resolution: {integrity: sha512-EpoEkyFzYZa2xzvOwHMAeW/dagqN0WXTL03IBJuZlE+33baKSTQEQ60L20472fPTJRxYaDv14A0UXglPvhSDsA==}
     peerDependencies:
       rescript: 11.x
       rescript-schema: 6.x || 7.x || 8.x
     dependencies:
       rescript: 11.1.3
-      rescript-schema: 8.0.0(rescript@11.1.3)
+      rescript-schema: 8.2.0(rescript@11.1.3)
     dev: false
 
   /rescript-express@0.4.1(express@4.19.2):
@@ -2064,8 +2064,8 @@ packages:
       express: 4.19.2
     dev: false
 
-  /rescript-schema@8.0.0(rescript@11.1.3):
-    resolution: {integrity: sha512-+i/us90Q73HeRZ9Y6BXfogb0BXpfwDmmFhHI+dZkvnzGOLMQEx3kowXv78LfP2ujpedwpN85/aqEPXRb+eBtog==}
+  /rescript-schema@8.2.0(rescript@11.1.3):
+    resolution: {integrity: sha512-pfRNB9kvafUYe+RgvsExiazJioi/iV8gmjK3xOw/jeSgPIIDoVhflnmpoz+vuiwlulYkNT/7u2+2EsCrph7QKA==}
     peerDependencies:
       rescript: 11.x
     dependencies:
