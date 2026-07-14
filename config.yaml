@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: My Envio Indexer
-unordered_multichain_mode: true
 rollback_on_reorg: false
 contracts:
   - name: PoolFactory
@@ -31,7 +30,7 @@ contracts:
     handler: src/EventHandlers.ts
     events:
       - event: NotifyReward(address indexed from, uint256 amount)
-networks:
+chains:
   - id: 10
     start_block: 0
     contracts:

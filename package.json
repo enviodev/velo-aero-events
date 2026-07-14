@@ -22,11 +22,12 @@
   },
   "dependencies": {
     "chai": "4.3.10",
-    "envio": "2.2.0",
+    "envio": "3.2.1",
     "ethers": "6.8.0",
     "web3": "^4.12.1"
   },
-  "optionalDependencies": {
-    "generated": "./generated"
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
   }
 }

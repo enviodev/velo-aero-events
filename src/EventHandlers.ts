@@ -1,29 +1,14 @@
+import { indexer } from "envio";
 /*
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
-import {
-  CLFactory,
-  CLFactory_PoolCreated,
-  Voter,
-  Voter_GaugeCreated,
-  PoolFactory,
-  PoolFactory_PoolCreated,
-  PoolFactory_SetCustomFee,
-  Pool,
-  Pool_Sync,
-  Pool_Swap,
-  BribeVotingReward,
-  BribeVotingReward_Deposit,
-  BribeVotingReward_NotifyReward,
-  BribeVotingReward_Withdraw,
-  Gauge,
-  Gauge_NotifyReward,
-  Token,
-} from "generated";
+import { CLFactory_PoolCreated, Voter_GaugeCreated, PoolFactory_PoolCreated, PoolFactory_SetCustomFee, Pool, Pool_Sync, Pool_Swap, BribeVotingReward, BribeVotingReward_Deposit, BribeVotingReward_NotifyReward, BribeVotingReward_Withdraw, Gauge, Gauge_NotifyReward, Token } from "envio";
 
 import { getErc20TokenDetails } from "./erc20";
 
-CLFactory.PoolCreated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "CLFactory", event: "PoolCreated" },
+  async ({ event, context }) => {
   const entity: CLFactory_PoolCreated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0: event.params.token0,
@@ -39,14 +24,20 @@ CLFactory.PoolCreated.handler(async ({ event, context }) => {
   // Fetch and save token details
   await saveTokenDetails(event.params.token0, event.chainId, context);
   await saveTokenDetails(event.params.token1, event.chainId, context);
-});
+}
+);
 
-Voter.GaugeCreated.contractRegister(({ event, context }) => {
-  context.addBribeVotingReward(event.params.bribeVotingReward);
-  context.addGauge(event.params.gauge);
-});
+indexer.contractRegister(
+  { contract: "Voter", event: "GaugeCreated" },
+  ({ event, context }) => {
+  context.chain.BribeVotingReward.add(event.params.bribeVotingReward);
+  context.chain.Gauge.add(event.params.gauge);
+}
+);
 
-Voter.GaugeCreated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Voter", event: "GaugeCreated" },
+  async ({ event, context }) => {
   const entity: Voter_GaugeCreated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     poolFactory: event.params.poolFactory,
@@ -62,13 +53,19 @@ Voter.GaugeCreated.handler(async ({ event, context }) => {
   };
 
   context.Voter_GaugeCreated.set(entity);
-});
+}
+);
 
-PoolFactory.PoolCreated.contractRegister(({ event, context }) => {
-  context.addPool(event.params.pool);
-});
+indexer.contractRegister(
+  { contract: "PoolFactory", event: "PoolCreated" },
+  ({ event, context }) => {
+  context.chain.Pool.add(event.params.pool);
+}
+);
 
-PoolFactory.PoolCreated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "PoolFactory", event: "PoolCreated" },
+  async ({ event, context }) => {
   const entity: PoolFactory_PoolCreated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0: event.params.token0,
@@ -85,9 +82,12 @@ PoolFactory.PoolCreated.handler(async ({ event, context }) => {
   // Fetch and save token details
   await saveTokenDetails(event.params.token0, event.chainId, context);
   await saveTokenDetails(event.params.token1, event.chainId, context);
-});
+}
+);
 
-PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "PoolFactory", event: "SetCustomFee" },
+  async ({ event, context }) => {
   const entity: PoolFactory_SetCustomFee = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     pool: event.params.pool,
@@ -97,9 +97,12 @@ PoolFactory.SetCustomFee.handler(async ({ event, context }) => {
   };
 
   context.PoolFactory_SetCustomFee.set(entity);
-});
+}
+);
 
-Pool.Sync.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pool", event: "Sync" },
+  async ({ event, context }) => {
   const entity: Pool_Sync = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     reserve0: event.params.reserve0,
@@ -110,9 +113,12 @@ Pool.Sync.handler(async ({ event, context }) => {
   };
 
   context.Pool_Sync.set(entity);
-});
+}
+);
 
-Pool.Swap.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pool", event: "Swap" },
+  async ({ event, context }) => {
   const entity: Pool_Swap = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -127,9 +133,12 @@ Pool.Swap.handler(async ({ event, context }) => {
   };
 
   context.Pool_Swap.set(entity);
-});
+}
+);
 
-BribeVotingReward.Deposit.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BribeVotingReward", event: "Deposit" },
+  async ({ event, context }) => {
   const entity: BribeVotingReward_Deposit = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
@@ -141,9 +150,12 @@ BribeVotingReward.Deposit.handler(async ({ event, context }) => {
   };
 
   context.BribeVotingReward_Deposit.set(entity);
-});
+}
+);
 
-BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BribeVotingReward", event: "NotifyReward" },
+  async ({ event, context }) => {
   const entity: BribeVotingReward_NotifyReward = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
@@ -156,9 +168,12 @@ BribeVotingReward.NotifyReward.handler(async ({ event, context }) => {
   };
 
   context.BribeVotingReward_NotifyReward.set(entity);
-});
+}
+);
 
-BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BribeVotingReward", event: "Withdraw" },
+  async ({ event, context }) => {
   const entity: BribeVotingReward_Withdraw = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
@@ -170,9 +185,12 @@ BribeVotingReward.Withdraw.handler(async ({ event, context }) => {
   };
 
   context.BribeVotingReward_Withdraw.set(entity);
-});
+}
+);
 
-Gauge.NotifyReward.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Gauge", event: "NotifyReward" },
+  async ({ event, context }) => {
   const entity: Gauge_NotifyReward = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
@@ -183,7 +201,8 @@ Gauge.NotifyReward.handler(async ({ event, context }) => {
   };
 
   context.Gauge_NotifyReward.set(entity);
-});
+}
+);
 
 async function saveTokenDetails(
   address: string,

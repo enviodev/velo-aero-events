@@ -1,8 +1,5 @@
 import assert from "assert";
-import { 
-  TestHelpers,
-  CLFactory_PoolCreated
-} from "generated";
+import { TestHelpers, CLFactory_PoolCreated } from "envio";
 const { MockDb, CLFactory } = TestHelpers;
 
 describe("CLFactory contract PoolCreated event tests", () => {
