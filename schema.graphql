@@ -5,7 +5,6 @@ type CLFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   tickSpacing: BigInt!
   pool: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type Voter_GaugeCreated @index(fields: ["pool", "gauge"]) {
@@ -19,7 +18,6 @@ type Voter_GaugeCreated @index(fields: ["pool", "gauge"]) {
   gauge: String! @index
   creator: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type PoolFactory_PoolCreated @index(fields: ["token0", "token1"]) {
@@ -30,7 +28,6 @@ type PoolFactory_PoolCreated @index(fields: ["token0", "token1"]) {
   pool: String! @index
   unnamed: BigInt!
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type PoolFactory_SetCustomFee {
@@ -38,7 +35,6 @@ type PoolFactory_SetCustomFee {
   pool: String! @index
   fee: BigInt! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type Pool_Sync @index(fields: ["sourceAddress", "timestamp"]) {
@@ -47,7 +43,6 @@ type Pool_Sync @index(fields: ["sourceAddress", "timestamp"]) {
   reserve1: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type BribeVotingReward_Deposit @index(fields: ["from", "tokenId"]) {
@@ -57,7 +52,6 @@ type BribeVotingReward_Deposit @index(fields: ["from", "tokenId"]) {
   amount: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type BribeVotingReward_NotifyReward
@@ -70,7 +64,6 @@ type BribeVotingReward_NotifyReward
   amount: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type BribeVotingReward_Withdraw @index(fields: ["from", "tokenId"]) {
@@ -80,7 +73,6 @@ type BribeVotingReward_Withdraw @index(fields: ["from", "tokenId"]) {
   amount: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type Gauge_NotifyReward {
@@ -89,7 +81,6 @@ type Gauge_NotifyReward {
   amount: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }
 
 type Token {
@@ -110,5 +101,4 @@ type Pool_Swap {
   amount1Out: BigInt!
   sourceAddress: String! @index
   timestamp: Timestamp! @index
-  chainId: Int! @index
 }

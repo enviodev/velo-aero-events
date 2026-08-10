@@ -19,7 +19,6 @@ function getRpcUrl(chainId: number): string {
 // Function to get ERC20 token details
 export async function getErc20TokenDetails(
   contractAddress: string,
-  chainId: number
 ): Promise<{
   readonly name: string;
   readonly decimals: number;

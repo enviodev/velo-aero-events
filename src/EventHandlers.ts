@@ -16,7 +16,6 @@ indexer.onEvent(
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.CLFactory_PoolCreated.set(entity);
@@ -49,7 +48,6 @@ indexer.onEvent(
     gauge: event.params.gauge,
     creator: event.params.creator,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.Voter_GaugeCreated.set(entity);
@@ -74,7 +72,6 @@ indexer.onEvent(
     pool: event.params.pool,
     unnamed: event.params.unnamed,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.PoolFactory_PoolCreated.set(entity);
@@ -93,7 +90,6 @@ indexer.onEvent(
     pool: event.params.pool,
     fee: event.params.fee,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.PoolFactory_SetCustomFee.set(entity);
@@ -109,7 +105,6 @@ indexer.onEvent(
     reserve1: event.params.reserve1,
     sourceAddress: event.srcAddress,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.Pool_Sync.set(entity);
@@ -129,7 +124,6 @@ indexer.onEvent(
     amount1Out: event.params.amount1Out,
     sourceAddress: event.srcAddress, // Add sourceAddress
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
-    chainId: event.chainId,
   };
 
   context.Pool_Swap.set(entity);
@@ -146,7 +140,6 @@ indexer.onEvent(
     amount: event.params.amount,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
-    chainId: event.chainId,
   };
 
   context.BribeVotingReward_Deposit.set(entity);
@@ -164,7 +157,6 @@ indexer.onEvent(
     amount: event.params.amount,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
-    chainId: event.chainId,
   };
 
   context.BribeVotingReward_NotifyReward.set(entity);
@@ -181,7 +173,6 @@ indexer.onEvent(
     amount: event.params.amount,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
-    chainId: event.chainId,
   };
 
   context.BribeVotingReward_Withdraw.set(entity);
@@ -197,7 +188,6 @@ indexer.onEvent(
     amount: event.params.amount,
     timestamp: new Date(event.block.timestamp * 1000), // Convert to Date
     sourceAddress: event.srcAddress,
-    chainId: event.chainId,
   };
 
   context.Gauge_NotifyReward.set(entity);
@@ -206,7 +196,6 @@ indexer.onEvent(
 
 async function saveTokenDetails(
   address: string,
-  chainId: number,
   context: any
 ) {
   try {
